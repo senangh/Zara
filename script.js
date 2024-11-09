@@ -1,20 +1,29 @@
-async function fetchWords() {
-  const response = await fetch('http://localhost:5000/words');
-  const words = await response.json();
-  return words.map(word => [word.word, word.count]);
+// script.js
+document.getElementById('taskForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const title = document.getElementById('title').value;
+  const description = document.getElementById('description').value;
+
+  await fetch('/api/tasks', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, description })
+  });
+
+  fetchTasks();
+});
+
+async function fetchTasks() {
+  const response = await fetch('/api/tasks');
+  const tasks = await response.json();
+  const taskList = document.getElementById('taskList');
+  taskList.innerHTML = '';
+  tasks.forEach(task => {
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${task.title}</strong>: ${task.description}`;
+    taskList.appendChild(li);
+  });
 }
 
-async function generateWordCloud() {
-  const wordList = await fetchWords();
-  const options = {
-    list: wordList,
-    gridSize: Math.round(16 * document.getElementById('word-cloud').offsetWidth / 1024),
-    weightFactor: 10,
-    fontFamily: 'Times, serif',
-    color: 'random-dark',
-    backgroundColor: '#f0f0f0',
-  };
-  WordCloud(document.getElementById('word-cloud'), options);
-}
-
-generateWordCloud();
+// Fetch tasks on initial load
+fetchTasks();

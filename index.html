@@ -1,20 +1,20 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word Cloud</title>
-  <style>
-    #word-cloud {
-      width: 100%;
-      height: 80vh;
-    }
-  </style>
+  <title>Task Manager</title>
 </head>
 <body>
-  <h1>Word Cloud</h1>
-  <div id="word-cloud"></div>
-  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.1.0/lib/wordcloud.min.js"></script>
+  <h1>Task Manager</h1>
+  <form id="taskForm">
+    <input type="text" id="title" placeholder="Task Title" required>
+    <textarea id="description" placeholder="Task Description"></textarea>
+    <button type="submit">Add Task</button>
+  </form>
+  <h2>Tasks</h2>
+  <ul id="taskList"></ul>
+
   <script src="script.js"></script>
 </body>
 </html>
